@@ -13,7 +13,7 @@
 
 Adding all perks to all maps and adds Pack-a-Punch to the maps who are missing one. 
 
-Currently only Tranzit's survival maps are supported.
+Only Tranzit's survival maps are currently supported.
 
 
 ### Perks added to Bus Depot:
@@ -42,7 +42,7 @@ Currently only Tranzit's survival maps are supported.
 Adding support for other maps & more perks
 
 ### Feedback
-If you have any feedback or suggestions, you can comment on the [Plutonium forum](https://forum.plutonium.pw/topic/37621/release-zm-zm_weapons-adding-all-weapons-to-all-maps) topic of my mod
+If you have any feedback or suggestions, you can comment on the [Plutonium forum](https://forum.plutonium.pw/topic/38256/release-zm-mod-zm_perks-adding-all-perks-to-maps) topic of my mod
 
 
 

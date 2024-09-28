@@ -1,2 +1,2 @@
-# T6-ZM-Perks-Survival-Maps
+# T6-ZM-Perks
 Adding all perks to the maps

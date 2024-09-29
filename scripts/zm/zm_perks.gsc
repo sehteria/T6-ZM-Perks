@@ -13,7 +13,7 @@ main()
 
 perks()
 {
-    if( getDvar("mapname") == "zm_transit" && getDvar("g_gametype") == "zstandard" )
+    if( getDvar("mapname") == "zm_transit" && getDvar("g_gametype") == "zclassic" || getDvar("g_gametype") == "zstandard")
     {
         level.zombiemode_using_deadshot_perk = 1;
         level.zombiemode_using_additionalprimaryweapon_perk = 1;

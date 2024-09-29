@@ -54612,6 +54612,24 @@
 "guid" "50C5570E"
 }
 {
+"origin" "5344 7064 -26"
+"model" "p6_zm_al_vending_ads_on"
+"classname" "script_struct"
+"angles" "0 0 0"
+"script_noteworthy" "specialty_deadshot"
+"targetname" "zm_perk_machine"
+"script_string" "zclassic_perks_transit"
+}
+{
+"origin" "13601 -1296 -189"
+"model" "zombie_vending_three_gun_on"
+"classname" "script_struct"
+"angles" "0 0 0"
+"script_noteworthy" "specialty_additionalprimaryweapon"
+"targetname" "zm_perk_machine"
+"script_string" "zclassic_perks_transit"
+}
+{
 "origin" "7677 -4740.2 35.130"
 "model" "p6_zm_al_vending_ads_on"
 "classname" "script_struct"

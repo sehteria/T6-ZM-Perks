@@ -15,8 +15,11 @@ Adding all perks to all maps and adds Pack-a-Punch to the maps who are missing o
 
 Only Tranzit's survival maps are currently supported.
 
+### Perks added to Tranzit:
+- Deadshot Daiquiri
+- Mule Kick
 
-### Perks added to Bus Depot:
+#### Perks added to Bus Depot:
 - Quick Revive
 - Juggernog
 - Speed Cola
@@ -27,16 +30,21 @@ Only Tranzit's survival maps are currently supported.
 - Deadshot Daiquiri
 - Pack-a-Punch
 
-### Perks added to Town:
+#### Perks added to Town:
 - Mule Kick
 - Deadshot Daiquiri
 
-### Perks added to Farm:
+#### Perks added to Farm:
 - Stamin-Up
 - Tombstone
 - Mule Kick
 - Deadshot Daiquiri
 - Pack-a-Punch
+
+### Perks added to Nuketown Zombies:
+- Stamin-Up
+- Deadshot Daiquiri
+- Mule Kick
 
 ### Upcoming updates
 Adding support for other maps & more perks

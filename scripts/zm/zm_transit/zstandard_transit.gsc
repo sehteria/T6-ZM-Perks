@@ -64,5 +64,5 @@ busdepot_perks()
 
 is_not_busdepot()
 {
-	return !is_gametype_active("zclassic") && getdvar("mapname") == "zm_transit" && getdvar("ui_zm_mapstartlocation") == "transit";
+	return !getdvar("g_gametype") == "zclassic" && getdvar("mapname") == "zm_transit" && getdvar("ui_zm_mapstartlocation") == "transit";
 }

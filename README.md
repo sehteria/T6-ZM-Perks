@@ -13,7 +13,7 @@
 
 Adding all perks to all maps and adds Pack-a-Punch to the maps who are missing one. 
 
-Only Tranzit's survival maps are currently supported.
+Only Tranzit, its survival maps and Nuketown zombies are currently supported.
 
 ### Perks added to Tranzit:
 - Deadshot Daiquiri

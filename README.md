@@ -44,5 +44,8 @@ Adding support for other maps & more perks
 ### Feedback
 If you have any feedback or suggestions, you can comment on the [Plutonium forum](https://forum.plutonium.pw/topic/38256/release-zm-mod-zm_perks-adding-all-perks-to-maps) topic of my mod
 
+#### Credits
+Some codes and/or functions are from [BO2 Reimagined](https://github.com/Jbleezy/BO2-Reimagined) made by JBleezy
+
 
 

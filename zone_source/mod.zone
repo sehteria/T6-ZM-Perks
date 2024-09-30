@@ -6,4 +6,6 @@ include,clientscripts
 
 include,perks/deadshotdaquiri
 include,perks/mulekick
+include,perks/staminup
+include,perks/phdflopper
 

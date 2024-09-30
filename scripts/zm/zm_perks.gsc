@@ -2,80 +2,38 @@
 #include maps\mp\_utility;
 #include maps\mp\zombies\_zm_utility;
 #include maps\mp\zombies\_zm_perks;
+#include maps\mp\zombies\_zm_perk_divetonuke;
 #include maps\mp\_visionset_mgr;
 
 main()
 {
-    electric_door_changes();
+    replaceFunc( maps\mp\zombies\_zm_perks::default_vending_precaching, ::default_vending_precaching );
+
     perks();
-    level.custom_vending_precaching = ::custom_vending_precaching;
 }
 
 perks()
 {
-    if( getDvar("mapname") == "zm_transit" && getDvar("g_gametype") == "zclassic" || getDvar("g_gametype") == "zstandard")
+    if( getDvar("mapname") == "zm_transit" )
     {
         level.zombiemode_using_deadshot_perk = 1;
         level.zombiemode_using_additionalprimaryweapon_perk = 1;
     }
-    else if ( getDvar("mapname") == "zm_nuked" && getDvar("g_gametype") == "zstandard" )
+    else if ( getDvar("mapname") == "zm_nuked" )
     {
         level.zombiemode_using_marathon_perk = 1;
         level.zombiemode_using_deadshot_perk = 1;
         level.zombiemode_using_additionalprimaryweapon_perk = 1;
     }
+    else if ( getDvar("mapname") == "zm_prison" && getDvar("g_gametype") == "zclassic" )
+    {
+        level.zombiemode_using_divetonuke_perk = 1;
+        maps\mp\zombies\_zm_perk_divetonuke::enable_divetonuke_perk_for_level();
+        level.zombiemode_using_additionalprimaryweapon_perk = 1;
+    }
 }
 
-electric_door_changes() //BO2 Reimagined
-{
-	if (is_classic())
-	{
-		return;
-	}
-
-	zombie_doors = getentarray("zombie_door", "targetname");
-
-	for (i = 0; i < zombie_doors.size; i++)
-	{
-        
-		if (isDefined(zombie_doors[i].script_noteworthy) && (zombie_doors[i].script_noteworthy == "local_electric_door" || zombie_doors[i].script_noteworthy == "electric_door"))
-		{
-			if (zombie_doors[i].target == "lab_secret_hatch")
-			{
-				continue;
-			}
-
-			zombie_doors[i].script_noteworthy = "default";
-			zombie_doors[i].zombie_cost = 750;
-
-			// link Bus Depot and Farm electric doors together
-			new_target = undefined;
-
-			if (zombie_doors[i].target == "pf1766_auto2353")
-			{
-				new_target = "pf1766_auto2352";
-
-			}
-			else if (zombie_doors[i].target == "pf1766_auto2358")
-			{
-				new_target = "pf1766_auto2357";
-			}
-
-			if (isDefined(new_target))
-			{
-				targets = getentarray(zombie_doors[i].target, "targetname");
-				zombie_doors[i].target = new_target;
-
-				foreach (target in targets)
-				{
-					target.targetname = zombie_doors[i].target;
-				}
-			}
-		}
-	} 
-}
-
-custom_vending_precaching()
+default_vending_precaching()
 {
     if ( isdefined( level.zombiemode_using_pack_a_punch ) && level.zombiemode_using_pack_a_punch )
     {
@@ -116,6 +74,8 @@ custom_vending_precaching()
         level.machine_assets["deadshot"].weapon = "zombie_perk_bottle_deadshot";
         level.machine_assets["deadshot"].off_model = "p6_zm_al_vending_ads_on";
         level.machine_assets["deadshot"].on_model = "p6_zm_al_vending_ads_on";
+        level.machine_assets["deadshot"].power_on_callback = ::vending_deadshot_power_on;
+		level.machine_assets["deadshot"].power_off_callback = ::vending_deadshot_power_off;
     }
 
     if ( isdefined( level.zombiemode_using_doubletap_perk ) && level.zombiemode_using_doubletap_perk )
@@ -229,4 +189,45 @@ custom_vending_precaching()
                 level [[ level._custom_perks[a_keys[i]].precache_func ]]();
         }
     }
+}
+
+vending_deadshot_power_on()
+{
+	if (level.script == "zm_prison")
+	{
+		self setclientfield("toggle_perk_machine_power", 2);
+	}
+	else
+	{
+		level thread clientnotifyloop("toggle_vending_deadshot_power_on", "deadshot_off");
+	}
+}
+
+vending_deadshot_power_off()
+{
+	if (level.script == "zm_prison")
+	{
+		self setclientfield("toggle_perk_machine_power", 1);
+	}
+	else
+	{
+		level thread clientnotifyloop("toggle_vending_deadshot_power_off", "deadshot_on");
+	}
+}
+
+clientnotifyloop(notify_str, endon_str)
+{
+	if (isdefined(endon_str))
+	{
+		level endon(endon_str);
+	}
+
+	while (1)
+	{
+		clientnotify(notify_str);
+
+		level waittill("connected", player);
+
+		wait 0.05;
+	}
 }

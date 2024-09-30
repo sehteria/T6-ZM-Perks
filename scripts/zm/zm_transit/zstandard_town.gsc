@@ -2,7 +2,7 @@
 #include common_scripts\utility;
 #include maps\mp\zombies\_zm_utility;
 
-main()
+init()
 {
     if( getDvar("mapname") == "zm_transit" && getDvar("g_gametype") == "zstandard" && getDvar("ui_zm_mapstartlocation") == "town" )
 	{

@@ -10,14 +10,9 @@
 
 main()
 {
-    if( getDvar("mapname") == "zm_nuked" && getDvar("g_gametype") == "zstandard" )
-	{
-        replaceFunc ( maps\mp\zm_nuked_perks::init_nuked_perks, ::init_nuked_perks);
-        replaceFunc ( maps\mp\zm_nuked_perks::bring_perk, ::bring_perk);
-        replaceFunc ( maps\mp\zm_nuked_perks::perks_from_the_sky, ::perks_from_the_sky);
-
-        level.custom_vending_precaching = scripts\zm\zm_perks::custom_vending_precaching;
-    }
+    replaceFunc (maps\mp\zm_nuked_perks::init_nuked_perks, ::init_nuked_perks );
+    replaceFunc (maps\mp\zm_nuked_perks::bring_perk, ::bring_perk );
+    replaceFunc (maps\mp\zm_nuked_perks::perks_from_the_sky, ::perks_from_the_sky );
 }
 
 init_nuked_perks()
@@ -28,7 +23,9 @@ init_nuked_perks()
     structs = getstructarray( "zm_perk_machine", "targetname" );
 
     for ( i = 0; i < structs.size; i++ )
+    {
         structs[i] structdelete();
+    }
 
     level.nuked_perks = [];
     level.nuked_perks[0] = spawnstruct();
@@ -85,7 +82,9 @@ init_nuked_perks()
         level.random_revive_structs[0].turn_on_notify = level.nuked_perks[0].turn_on_notify;
 
         if ( !isdefined( level.struct_class_names["targetname"]["zm_perk_machine_override"] ) )
+        {
             level.struct_class_names["targetname"]["zm_perk_machine_override"] = [];
+        }
 
         level.struct_class_names["targetname"]["zm_perk_machine_override"][level.struct_class_names["targetname"]["zm_perk_machine_override"].size] = level.random_revive_structs[0];
 /#
@@ -103,7 +102,7 @@ init_nuked_perks()
 
         level.random_perk_structs = array_randomize( random_perk_structs );
 
-        for ( i = 1; i < 8; i++ )
+        for ( i = 1; i < 9; i++ )
         {
             level.random_perk_structs[i].targetname = "zm_perk_machine_override";
             level.random_perk_structs[i].model = level.nuked_perks[i].model;
@@ -114,7 +113,9 @@ init_nuked_perks()
             level.random_perk_structs[i].turn_on_notify = level.nuked_perks[i].turn_on_notify;
 
             if ( !isdefined( level.struct_class_names["targetname"]["zm_perk_machine_override"] ) )
+            {
                 level.struct_class_names["targetname"]["zm_perk_machine_override"] = [];
+            }
 
             level.struct_class_names["targetname"]["zm_perk_machine_override"][level.struct_class_names["targetname"]["zm_perk_machine_override"].size] = level.random_perk_structs[i];
 /#
@@ -136,7 +137,7 @@ init_nuked_perks()
 
         level.random_perk_structs = array_randomize( random_perk_structs );
 
-        for ( i = 0; i < 8; i++ )
+        for ( i = 0; i < 9; i++ )
         {
             level.random_perk_structs[i].targetname = "zm_perk_machine_override";
             level.random_perk_structs[i].model = level.nuked_perks[i].model;
@@ -147,7 +148,9 @@ init_nuked_perks()
             level.random_perk_structs[i].turn_on_notify = level.nuked_perks[i].turn_on_notify;
 
             if ( !isdefined( level.struct_class_names["targetname"]["zm_perk_machine_override"] ) )
+            {
                 level.struct_class_names["targetname"]["zm_perk_machine_override"] = [];
+            }
 
             level.struct_class_names["targetname"]["zm_perk_machine_override"][level.struct_class_names["targetname"]["zm_perk_machine_override"].size] = level.random_perk_structs[i];
 /#
@@ -231,7 +234,9 @@ bring_perk( machine, trigger )
     }
 
     if ( !is_revive )
+    {
         trigger.blocker_model delete();
+    }
 
     machine.original_pos = machine.original_pos + ( offset[0], offset[1], 0 );
     machine.origin = machine.original_pos;
@@ -262,17 +267,29 @@ bring_perk( machine, trigger )
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "revive_light" );
     }
     else if ( is_jugger )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "jugger_light" );
+    }
     else if ( is_doubletap )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "doubletap_light" );
+    }
     else if ( is_sleight )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "sleight_light" );
+    }
     else if ( is_marathon )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "marathon_light" );
+    }
     else if ( is_mulekick )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "additionalprimaryweapon_light" );
+    }
     else if ( is_deadshot )
+    {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "deadshot_light" );
+    }
 }
 
 perks_from_the_sky()
@@ -284,7 +301,9 @@ perks_from_the_sky()
     machines[0] = getent( "vending_revive", "targetname" );
 
     if ( !isdefined( machines[0] ) )
+    {
         return;
+    }
 
     machine_triggers[0] = getent( "vending_revive", "target" );
     move_perk( machines[0], top_height, 5.0, 0.001 );
@@ -331,28 +350,52 @@ perks_from_the_sky()
         arrayremoveindex( machine_triggers, index );
     }
 
-    wait_for_round_range( 3, 5 );
+    // wait_for_round_range( 3, 5 );
+    // wait( randomintrange( 30, 60 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 6, 8 );
+    // wait( randomintrange( 30, 60 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 9, 11 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 12, 14 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 15, 17 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 18, 20 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 21, 23 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    // wait_for_round_range( 24, 26 );
+    // wait( randomintrange( 60, 120 ) );
+    // bring_random_perk( machines, machine_triggers );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 30, 60 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 6, 8 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 30, 60 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 9, 11 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 12, 14 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 15, 17 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 18, 20 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 21, 23 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
-    wait_for_round_range( 24, 26 );
+    wait_for_round_range( 1, 2 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
 }

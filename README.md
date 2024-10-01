@@ -15,10 +15,14 @@ Adding all perks to all maps and adds Pack-a-Punch to the maps who are missing o
 
 Tranzit (including survival maps), Nuketown zombies and Mob of the Dead are the only maps currently supported.
 
+### Showcase
+[Tranzit Classic](https://imgur.com/a/hxsCG2x)
+
+[Mob of the Dead Classic](https://imgur.com/a/dDOgEHx)
+
 ### Perks added to Tranzit:
 - Deadshot Daiquiri at The Cabin
 - Mule Kick at The Prototype
-- [Showcase](https://imgur.com/a/hxsCG2x)
 
 #### Perks added to Bus Depot:
 - Quick Revive
@@ -50,7 +54,6 @@ Tranzit (including survival maps), Nuketown zombies and Mob of the Dead are the 
 ### Perks added to Mob of the Dead:
 - PHD Flopper
 - Mule Kick 
-- [Showcase](https://imgur.com/a/dDOgEHx)
 
 ### Upcoming updates
 Adding support for other maps & more perks

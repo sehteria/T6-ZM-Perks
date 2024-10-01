@@ -13,56 +13,78 @@
 
 Adding all perks to all maps and adds Pack-a-Punch to the maps who are missing one. 
 
-Tranzit (including survival maps), Nuketown zombies and Mob of the Dead are the only maps currently supported.
+Tranzit (including survival maps), Nuketown zombies, Die Rise, Mob of the Dead and Buried are the only maps currently supported.
 
 ### Showcase
-[Tranzit Classic](https://imgur.com/a/hxsCG2x)
+[Tranzit Classic](https://imgur.com/a/U4QtnAq)
+
+[Tranzit Survival](https://imgur.com/a/MVo0Cov)
+
+[Die Rise](https://imgur.com/a/vKvOjve)
 
 [Mob of the Dead Classic](https://imgur.com/a/dDOgEHx)
 
-### Perks added to Tranzit:
-- Deadshot Daiquiri at The Cabin
-- Mule Kick at The Prototype
+[Buried](https://imgur.com/a/eOzaPz5)
 
-#### Perks added to Bus Depot:
+### Perks added to Tranzit:
+- Deadshot Daiquiri
+- Mule Kick
+- PHD Flopper
+
+##### Perks added to Bus Depot:
 - Quick Revive
 - Juggernog
 - Speed Cola
 - Double Tap Root Beer
 - Stamin-Up
 - Tombstone
-- Mule Kick
 - Deadshot Daiquiri
+- Mule Kick
+- PHD Flopper
 - Pack-a-Punch
 
-#### Perks added to Town:
-- Mule Kick
+##### Perks added to Town:
 - Deadshot Daiquiri
+- Mule Kick
+- PHD Flopper
 
-#### Perks added to Farm:
+##### Perks added to Farm:
 - Stamin-Up
 - Tombstone
-- Mule Kick
 - Deadshot Daiquiri
+- Mule Kick
+- PHD Flopper
 - Pack-a-Punch
 
 ### Perks added to Nuketown Zombies:
 - Stamin-Up
 - Deadshot Daiquiri
 - Mule Kick
+- PHD Flopper
+
+### Perks added to Die Rise:
+- Stamin-Up
+- PHD Flopper
 
 ### Perks added to Mob of the Dead:
+- Mule Kick
 - PHD Flopper
-- Mule Kick 
 
-### Upcoming updates
+### Perks added to Buried:
+- Deadshot Daiquiri
+- PHD Flopper
+
+### Changes:
+Quick Revive in Nuketown Zombies always lands inside the garage
+
+#### Upcoming updates
 Adding support for other maps & more perks
 
-### Feedback
+#### Feedback
 If you have any feedback or suggestions, you can comment on the [Plutonium forum](https://forum.plutonium.pw/topic/38256/release-zm-mod-zm_perks-adding-all-perks-to-maps) topic of my mod
 
 #### Credits
-Some codes and/or functions are from [BO2 Reimagined](https://github.com/Jbleezy/BO2-Reimagined) made by JBleezy
+There are codes/functions/perk locations taken from [BO2 Reimagined](https://github.com/Jbleezy/BO2-Reimagined), made by JBleezy
 
 
 

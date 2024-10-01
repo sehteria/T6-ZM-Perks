@@ -44,11 +44,42 @@ divetonuke_precache()
     level.machine_assets["divetonuke"].weapon = "zombie_perk_bottle_nuke";
     level.machine_assets["divetonuke"].off_model = "p6_zm_al_vending_nuke_on";
     level.machine_assets["divetonuke"].on_model = "p6_zm_al_vending_nuke_on";
+    level.machine_assets["divetonuke"].power_on_callback = ::vending_divetonuke_power_on;
+	level.machine_assets["divetonuke"].power_off_callback = ::vending_divetonuke_power_off;
 }
+
+vending_divetonuke_power_on()
+{
+	if (level.script == "zm_prison")
+	{
+		self setclientfield("toggle_perk_machine_power", 2);
+	}
+	else
+	{
+		level thread scripts\zm\zm_perks::clientnotifyloop("toggle_vending_divetonuke_power_on", "divetonuke_off");
+	}
+}
+vending_divetonuke_power_off()
+{
+	if (level.script == "zm_prison")
+	{
+		self setclientfield("toggle_perk_machine_power", 1);
+	}
+	else
+	{
+		level thread scripts\zm\zm_perks::clientnotifyloop("toggle_vending_divetonuke_power_off", "divetonuke_on");
+	}
+}
+
 
 divetonuke_register_clientfield()
 {
-    registerclientfield( "toplayer", "perk_dive_to_nuke", 9000, 1, "int" );
+	bits = 1;
+	if (isdefined(level.zombie_include_weapons) && isdefined(level.zombie_include_weapons["emp_grenade_zm"]))
+	{
+		bits = 2;
+	}
+	registerclientfield("toplayer", "perk_dive_to_nuke", 9000, bits, "int");
 }
 
 divetonuke_set_clientfield( state )
@@ -58,13 +89,22 @@ divetonuke_set_clientfield( state )
 
 divetonuke_perk_machine_setup( use_trigger, perk_machine, bump_trigger, collision )
 {
-    use_trigger.script_sound = "mus_perks_phd_jingle";
+
     use_trigger.script_string = "divetonuke_perk";
-    use_trigger.script_label = "mus_perks_phd_sting";
     use_trigger.target = "vending_divetonuke";
     perk_machine.script_string = "divetonuke_perk";
     perk_machine.targetname = "vending_divetonuke";
 
+    if( getDvar("mapname" ) == "zm_prison" )
+    {
+        use_trigger.script_sound = "mus_perks_phd_jingle";
+        use_trigger.script_label = "mus_perks_phd_sting";
+    }
+    else 
+    {
+        use_trigger.script_sound = "mus_perks_phdflopper_jingle";
+        use_trigger.script_label = "mus_perks_phdflopper_sting";
+    }
     if ( isdefined( bump_trigger ) )
     {
         bump_trigger.script_string = "divetonuke_perk";

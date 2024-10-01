@@ -54630,6 +54630,15 @@
 "script_string" "zclassic_perks_transit"
 }
 {
+"origin" "-10670 -756 195"
+"model" "p6_zm_al_vending_nuke_on"
+"classname" "script_struct"
+"angles" "0 262 0"
+"script_noteworthy" "specialty_flakjacket"
+"targetname" "zm_perk_machine"
+"script_string" "zclassic_perks_transit"
+}
+{
 "origin" "7677 -4740.2 35.130"
 "model" "p6_zm_al_vending_ads_on"
 "classname" "script_struct"
@@ -54666,6 +54675,15 @@
 "script_string" "zstandard_perks_farm"
 }
 {
+"origin" "8507.6 -5599.6 50.125"
+"model" "p6_zm_al_vending_nuke_on"
+"classname" "script_struct"
+"angles" "0 2.50448e-006 0"
+"script_noteworthy" "specialty_flakjacket"
+"targetname" "zm_perk_machine"
+"script_string" "zstandard_perks_farm"
+}
+{
 "origin" "8803.4 -5775.9 50.125"
 "model" "p6_anim_zm_buildable_pap"
 "classname" "script_struct"
@@ -54697,6 +54715,15 @@
 "classname" "script_struct"
 "angles" "0 215 0"
 "script_noteworthy" "specialty_additionalprimaryweapon"
+"targetname" "zm_perk_machine"
+"script_string" "zstandard_perks_town"
+}
+{
+"origin" "500 822.7 -40"
+"model" "p6_zm_al_vending_nuke_on"
+"classname" "script_struct"
+"angles" "0 0 0"
+"script_noteworthy" "specialty_flakjacket"
 "targetname" "zm_perk_machine"
 "script_string" "zstandard_perks_town"
 }
@@ -54769,6 +54796,15 @@
 "classname" "script_struct"
 "angles" "0 -35 0"
 "script_noteworthy" "specialty_additionalprimaryweapon"
+"targetname" "zm_perk_machine"
+"script_string" "zstandard_perks_transit"
+}
+{
+"origin" "-6663 4592 -55"
+"model" "p6_zm_al_vending_nuke_on"
+"classname" "script_struct"
+"angles" "0 180 0"
+"script_noteworthy" "specialty_flakjacket"
 "targetname" "zm_perk_machine"
 "script_string" "zstandard_perks_transit"
 }

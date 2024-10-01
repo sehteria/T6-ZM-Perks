@@ -1,3 +1,4 @@
 script,scripts/zm/zm_perks.csc
 script,clientscripts/mp/zombies/_zm_perk_divetonuke.csc
+script,scripts/zm/zm_transit/zm_transit_reform.csc
 

@@ -3,6 +3,7 @@
 #include maps\mp\zombies\_zm_utility;
 #include maps\mp\zombies\_zm_weapons;
 #include maps\mp\zombies\_zm_perks;
+#include maps\mp\zombies\_zm_perk_divetonuke;
 #include maps\mp\animscripts\zm_death;
 #include maps\mp\zombies\_zm_game_module;
 #include maps\mp\_zm_nuked_perks;
@@ -61,6 +62,10 @@ init_nuked_perks()
     level.nuked_perks[7].model = "p6_zm_al_vending_ads_on";
     level.nuked_perks[7].script_noteworthy = "specialty_deadshot";
     level.nuked_perks[7].turn_on_notify = "deadshot_on";
+    level.nuked_perks[8] = spawnstruct();
+    level.nuked_perks[8].model = "p6_zm_al_vending_nuke_on";
+    level.nuked_perks[8].script_noteworthy = "specialty_flakjacket";
+    level.nuked_perks[8].turn_on_notify = "divetonuke_on";
     players = getnumexpectedplayers();
 
     if ( players == 1 )
@@ -102,7 +107,7 @@ init_nuked_perks()
 
         level.random_perk_structs = array_randomize( random_perk_structs );
 
-        for ( i = 1; i < 9; i++ )
+        for ( i = 1; i < 9; i++ ) //9
         {
             level.random_perk_structs[i].targetname = "zm_perk_machine_override";
             level.random_perk_structs[i].model = level.nuked_perks[i].model;
@@ -137,7 +142,7 @@ init_nuked_perks()
 
         level.random_perk_structs = array_randomize( random_perk_structs );
 
-        for ( i = 0; i < 9; i++ )
+        for ( i = 0; i < 9; i++ ) //9
         {
             level.random_perk_structs[i].targetname = "zm_perk_machine_override";
             level.random_perk_structs[i].model = level.nuked_perks[i].model;
@@ -170,6 +175,7 @@ bring_perk( machine, trigger )
     is_marathon = 0;
     is_mulekick = 0;
     is_deadshot = 0;
+    is_phd = 0;
     flag_waitopen( "perk_vehicle_bringing_in_perk" );
     playsoundatposition( "zmb_perks_incoming_quad_front", ( 0, 0, 0 ) );
     playsoundatposition( "zmb_perks_incoming_alarm", ( -2198, 486, 327 ) );
@@ -232,6 +238,12 @@ bring_perk( machine, trigger )
         offset = vectorscale( forward_dir * -1, 10 );
         is_deadshot = 1;
     }
+    else if ( issubstr( machine.targetname, "phd" ) )
+    {
+        forward_dir = anglestoforward( machine.original_angles + vectorscale( ( 0, -1, 0 ), 90.0 ) );
+        offset = vectorscale( forward_dir * -1, 20 );
+        is_phd = 1;
+    }
 
     if ( !is_revive )
     {
@@ -290,6 +302,10 @@ bring_perk( machine, trigger )
     {
         machine thread maps\mp\zombies\_zm_perks::perk_fx( "deadshot_light" );
     }
+    else if ( is_phd )
+    {
+        machine thread perk_fx( "divetonuke_light" );
+    }
 }
 
 perks_from_the_sky()
@@ -337,6 +353,10 @@ perks_from_the_sky()
     machine_triggers[7] = getent( "vending_deadshot", "target" );
     move_perk( machines[7], top_height, 5.0, 0.001 );
     machine_triggers[7] trigger_off();
+    machines[8] = getent( "vending_divetonuke", "targetname" );
+    machine_triggers[8] = getent( "vending_divetonuke", "target" );
+    move_perk( machines[8], top_height, 5.0, 0.001 );
+    machine_triggers[8] trigger_off();
     flag_wait( "initial_blackscreen_passed" );
     wait( randomfloatrange( 5.0, 15.0 ) );
     players = get_players();
@@ -369,6 +389,9 @@ perks_from_the_sky()
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
     wait_for_round_range( 21, 23 );
+    wait( randomintrange( 60, 120 ) );
+    bring_random_perk( machines, machine_triggers );
+    wait_for_round_range( 24, 26 );
     wait( randomintrange( 60, 120 ) );
     bring_random_perk( machines, machine_triggers );
     wait_for_round_range( 24, 26 );

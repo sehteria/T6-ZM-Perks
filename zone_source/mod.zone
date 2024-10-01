@@ -8,4 +8,7 @@ include,perks/deadshotdaquiri
 include,perks/mulekick
 include,perks/staminup
 include,perks/phdflopper
+include,perks/doubletap
+
+soundbank,mod.all
 

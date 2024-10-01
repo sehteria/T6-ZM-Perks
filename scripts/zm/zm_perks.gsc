@@ -4,9 +4,14 @@
 #include maps\mp\zombies\_zm_perks;
 #include maps\mp\zombies\_zm_perk_divetonuke;
 #include maps\mp\_visionset_mgr;
+#include maps\mp\zombies\_zm_power;
+#include maps\mp\zombies\_zm;
 
 main()
 {
+    replaceFunc( maps\mp\zombies\_zm_perks::perks_register_clientfield, ::perks_register_clientfield );
+    replaceFunc( maps\mp\zombies\_zm::init_client_flags, ::init_client_flags );
+    replaceFunc( maps\mp\zombies\_zm_perks::give_perk, ::give_perk );
     replaceFunc( maps\mp\zombies\_zm_perks::default_vending_precaching, ::default_vending_precaching );
 
     perks();
@@ -14,23 +19,189 @@ main()
 
 perks()
 {
-    if( getDvar("mapname") == "zm_transit" )
-    {
-        level.zombiemode_using_deadshot_perk = 1;
-        level.zombiemode_using_additionalprimaryweapon_perk = 1;
-    }
-    else if ( getDvar("mapname") == "zm_nuked" )
+    if ( getDvar("mapname") == "zm_transit" || getDvar("mapname") == "zm_nuked" || getDvar("mapname") == "zm_highrise" || getDvar("mapname") == "zm_prison" || getDvar("mapname") == "zm_buried" ) //GLOBAL
     {
         level.zombiemode_using_marathon_perk = 1;
         level.zombiemode_using_deadshot_perk = 1;
         level.zombiemode_using_additionalprimaryweapon_perk = 1;
-    }
-    else if ( getDvar("mapname") == "zm_prison" && getDvar("g_gametype") == "zclassic" )
-    {
         level.zombiemode_using_divetonuke_perk = 1;
         maps\mp\zombies\_zm_perk_divetonuke::enable_divetonuke_perk_for_level();
-        level.zombiemode_using_additionalprimaryweapon_perk = 1;
     }
+}
+
+perks_register_clientfield()
+{
+	bits = 1;
+	if (isdefined(level.zombie_include_weapons) && isdefined(level.zombie_include_weapons["emp_grenade_zm"]))
+	{
+		bits = 2;
+	}
+	if (isdefined(level.zombiemode_using_additionalprimaryweapon_perk) && level.zombiemode_using_additionalprimaryweapon_perk)
+	{
+		registerclientfield("toplayer", "perk_additional_primary_weapon", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_deadshot_perk) && level.zombiemode_using_deadshot_perk)
+	{
+		registerclientfield("toplayer", "perk_dead_shot", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_doubletap_perk) && level.zombiemode_using_doubletap_perk)
+	{
+		registerclientfield("toplayer", "perk_double_tap", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_juggernaut_perk) && level.zombiemode_using_juggernaut_perk)
+	{
+		registerclientfield("toplayer", "perk_juggernaut", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_marathon_perk) && level.zombiemode_using_marathon_perk)
+	{
+		registerclientfield("toplayer", "perk_marathon", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_revive_perk) && level.zombiemode_using_revive_perk)
+	{
+		registerclientfield("toplayer", "perk_quick_revive", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_sleightofhand_perk) && level.zombiemode_using_sleightofhand_perk)
+	{
+		registerclientfield("toplayer", "perk_sleight_of_hand", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_tombstone_perk) && level.zombiemode_using_tombstone_perk)
+	{
+		registerclientfield("toplayer", "perk_tombstone", 1, bits, "int");
+	}
+	if (isdefined(level.zombiemode_using_perk_intro_fx) && level.zombiemode_using_perk_intro_fx)
+	{
+		registerclientfield("scriptmover", "clientfield_perk_intro_fx", 1000, 1, "int");
+	}
+	if (isdefined(level.zombiemode_using_chugabud_perk) && level.zombiemode_using_chugabud_perk)
+	{
+		registerclientfield("toplayer", "perk_chugabud", 1000, 1, "int");
+	}
+	if (isdefined(level._custom_perks))
+	{
+		a_keys = getarraykeys(level._custom_perks);
+		for (i = 0; i < a_keys.size; i++)
+		{
+			if (isdefined(level._custom_perks[a_keys[i]].clientfield_register))
+			{
+				level [[level._custom_perks[a_keys[i]].clientfield_register]]();
+			}
+		}
+	}
+}
+
+init_client_flags()
+{
+	level.disable_deadshot_clientfield = 1;
+	if (isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx)
+	{
+		level._zombie_scriptmover_flag_board_horizontal_fx = 14;
+		level._zombie_scriptmover_flag_board_vertical_fx = 13;
+	}
+	if (isdefined(level.use_clientside_rock_tearin_fx) && level.use_clientside_rock_tearin_fx)
+	{
+		level._zombie_scriptmover_flag_rock_fx = 12;
+	}
+	level._zombie_player_flag_cloak_weapon = 14;
+	if (!(isdefined(level.disable_deadshot_clientfield) && level.disable_deadshot_clientfield))
+	{
+		registerclientfield("toplayer", "deadshot_perk", 1, 1, "int");
+	}
+	registerclientfield("actor", "zombie_riser_fx", 1, 1, "int");
+	if (!(isdefined(level._no_water_risers) && level._no_water_risers))
+	{
+		registerclientfield("actor", "zombie_riser_fx_water", 1, 1, "int");
+	}
+	if (isdefined(level._foliage_risers) && level._foliage_risers)
+	{
+		registerclientfield("actor", "zombie_riser_fx_foliage", 12000, 1, "int");
+	}
+	if (isdefined(level.risers_use_low_gravity_fx) && level.risers_use_low_gravity_fx)
+	{
+		registerclientfield("actor", "zombie_riser_fx_lowg", 1, 1, "int");
+	}
+}
+
+give_perk( perk, bought )
+{
+    self setperk( perk );
+    self.num_perks++;
+
+    if ( isdefined( bought ) && bought )
+    {
+        self maps\mp\zombies\_zm_audio::playerexert( "burp" );
+
+        if ( isdefined( level.remove_perk_vo_delay ) && level.remove_perk_vo_delay )
+            self maps\mp\zombies\_zm_audio::perk_vox( perk );
+        else
+            self delay_thread( 1.5, maps\mp\zombies\_zm_audio::perk_vox, perk );
+
+        self setblur( 4, 0.1 );
+        wait 0.1;
+        self setblur( 0, 0.1 );
+        self notify( "perk_bought", perk );
+    }
+
+    self perk_set_max_health_if_jugg( perk, 1, 0 );
+
+    if (!(isDefined(level.disable_deadshot_clientfield) && level.disable_deadshot_clientfield))
+    {
+        if ( perk == "specialty_deadshot" )
+            self setclientfieldtoplayer( "deadshot_perk", 1 );
+        else if ( perk == "specialty_deadshot_upgrade" )
+            self setclientfieldtoplayer( "deadshot_perk", 1 );
+    }
+
+    if ( perk == "specialty_scavenger" )
+        self.hasperkspecialtytombstone = 1;
+
+    players = get_players();
+
+    if ( use_solo_revive() && perk == "specialty_quickrevive" )
+    {
+        self.lives = 1;
+
+        if ( !isdefined( level.solo_lives_given ) )
+            level.solo_lives_given = 0;
+
+        if ( isdefined( level.solo_game_free_player_quickrevive ) )
+            level.solo_game_free_player_quickrevive = undefined;
+        else
+            level.solo_lives_given++;
+
+        if ( level.solo_lives_given >= 3 )
+            flag_set( "solo_revive" );
+
+        self thread solo_revive_buy_trigger_move( perk );
+    }
+
+    if ( perk == "specialty_finalstand" )
+    {
+        self.lives = 1;
+        self.hasperkspecialtychugabud = 1;
+        self notify( "perk_chugabud_activated" );
+    }
+
+    if ( isdefined( level._custom_perks[perk] ) && isdefined( level._custom_perks[perk].player_thread_give ) )
+        self thread [[ level._custom_perks[perk].player_thread_give ]]();
+
+    self set_perk_clientfield( perk, 1 );
+    maps\mp\_demo::bookmark( "zm_player_perk", gettime(), self );
+    self maps\mp\zombies\_zm_stats::increment_client_stat( "perks_drank" );
+    self maps\mp\zombies\_zm_stats::increment_client_stat( perk + "_drank" );
+    self maps\mp\zombies\_zm_stats::increment_player_stat( perk + "_drank" );
+    self maps\mp\zombies\_zm_stats::increment_player_stat( "perks_drank" );
+
+    if ( !isdefined( self.perk_history ) )
+        self.perk_history = [];
+
+    self.perk_history = add_to_array( self.perk_history, perk, 0 );
+
+    if ( !isdefined( self.perks_active ) )
+        self.perks_active = [];
+
+    self.perks_active[self.perks_active.size] = perk;
+    self notify( "perk_acquired" );
+    self thread perk_think( perk );
 }
 
 default_vending_precaching()

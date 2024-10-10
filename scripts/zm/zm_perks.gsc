@@ -17,6 +17,69 @@ main()
     perks();
 }
 
+init()
+{
+    level.player_too_many_weapons_monitor_func = ::player_too_many_weapons_monitor;
+}
+
+player_too_many_weapons_monitor()
+{
+    if( level.script == "zm_prison" )
+    {
+        self notify( "stop_player_too_many_weapons_monitor" );
+        self endon( "stop_player_too_many_weapons_monitor" );
+        self endon( "disconnect" );
+        level endon( "end_game" );
+        scalar = self.characterindex;
+
+        if ( !isdefined( scalar ) )
+            scalar = self getentitynumber();
+
+        wait( 0.15 * scalar );
+
+        while ( true )
+        {
+            if ( self has_powerup_weapon() || self maps\mp\zombies\_zm_laststand::player_is_in_laststand() || self.sessionstate == "spectator" )
+            {
+                wait( get_player_too_many_weapons_monitor_wait_time() );
+                continue;
+            }
+
+            weapon_limit = get_player_weapon_limit( self );
+            primaryweapons = self getweaponslistprimaries();
+
+            if ( primaryweapons.size > weapon_limit )
+            {
+                self maps\mp\zombies\_zm_weapons::take_fallback_weapon();
+                primaryweapons = self getweaponslistprimaries();
+            }
+
+            primary_weapons_to_take = [];
+
+            for ( i = 0; i < primaryweapons.size; i++ )
+            {
+                if ( maps\mp\zombies\_zm_weapons::is_weapon_included( primaryweapons[i] ) || maps\mp\zombies\_zm_weapons::is_weapon_upgraded( primaryweapons[i] ) )
+                    primary_weapons_to_take[primary_weapons_to_take.size] = primaryweapons[i];
+            }
+
+            if ( primary_weapons_to_take.size > weapon_limit )
+            {
+                if ( !isdefined( level.player_too_many_weapons_monitor_callback ) || self [[ level.player_too_many_weapons_monitor_callback ]]( primary_weapons_to_take ) )
+                {
+                    self maps\mp\zombies\_zm_stats::increment_map_cheat_stat( "cheat_too_many_weapons" );
+                    self maps\mp\zombies\_zm_stats::increment_client_stat( "cheat_too_many_weapons", 0 );
+                    self maps\mp\zombies\_zm_stats::increment_client_stat( "cheat_total", 0 );
+                    self takeweapon(primary_weapons_to_take[primary_weapons_to_take.size - 1]);
+                    // self thread player_too_many_weapons_monitor_takeaway_sequence( primary_weapons_to_take );
+                    // self waittill( "player_too_many_weapons_monitor_takeaway_sequence_done" );
+                }
+            }
+
+            wait( get_player_too_many_weapons_monitor_wait_time() );
+        }
+    }
+}
+
 perks()
 {
     if ( getDvar("mapname") == "zm_transit" || getDvar("mapname") == "zm_nuked" || getDvar("mapname") == "zm_highrise" || getDvar("mapname") == "zm_prison" || getDvar("mapname") == "zm_buried" ) //GLOBAL

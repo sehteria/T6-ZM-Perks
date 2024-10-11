@@ -5,9 +5,9 @@ set MOD_NAME=zm_perks
 "%OAT_BASE%\linker.exe" ^
 -v ^
 --load "%GAME_FOLDER%\zone\all\zm_transit.ff" ^
+--load "%GAME_FOLDER%\zone\all\zm_tomb.ff" ^
 --load "%GAME_FOLDER%\zone\all\zm_prison.ff" ^
 --load "%GAME_FOLDER%\zone\all\zm_buried.ff" ^
---load "%GAME_FOLDER%\zone\all\zm_tomb.ff" ^
 --base-folder "%OAT_BASE%" ^
 --asset-search-path "%MOD_BASE%" ^
 --source-search-path "%MOD_BASE%\zone_source" ^
